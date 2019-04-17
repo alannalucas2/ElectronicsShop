@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
+    tools:context=".LoginActivities.AdminRegisterActivity"
     android:orientation="vertical">
 
     <EditText
@@ -25,28 +25,6 @@
         android:hint="password"
         android:id="@+id/password"/>
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioGroup">
-        <RadioButton
-            android:id="@+id/radCons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Consumer" />
-        <RadioButton
-            android:id="@+id/radAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Administrator" />
-
-    </RadioGroup>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="admin authorisation code"
-        android:id="@+id/admin"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -55,8 +33,30 @@
         android:paddingLeft="35dp"
         android:paddingRight="35dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/register"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingTop="120dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="Already have an account? Login here"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Login"
+            android:id="@+id/loginPage"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>
