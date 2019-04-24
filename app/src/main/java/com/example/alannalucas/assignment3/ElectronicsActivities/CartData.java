@@ -1,6 +1,8 @@
 package com.example.alannalucas.assignment3.ElectronicsActivities;
 
-public class ElectronicGoods {
+import android.widget.TextView;
+
+public class CartData {
 
     public String title;
     public String manufacturer;
@@ -8,20 +10,23 @@ public class ElectronicGoods {
     public String category;
     public String quantity;
     public String price;
+    public String total;
 
-    public ElectronicGoods(){
+    public CartData(){
 
     }
 
-
-    public ElectronicGoods(String title, String manufacturer, String image, String category, String quantity, String price) {
+    public CartData(String title, String manufacturer, String image, String category, String quantity, String price, String total) {
         this.title = title;
         this.manufacturer = manufacturer;
         this.image = image;
         this.category = category;
         this.quantity = quantity;
         this.price = price;
+        this.total = total;
     }
+
+
 
     public String getTitle() {
         return title;
@@ -39,12 +44,12 @@ public class ElectronicGoods {
         this.manufacturer = manufacturer;
     }
 
-    public String getImageUrl() {
+    public String getImage() {
         return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.image = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCategory() {
@@ -69,5 +74,13 @@ public class ElectronicGoods {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }

@@ -7,73 +7,77 @@
     android:orientation="vertical"
     tools:context=".ElectronicsActivities.AddElectronics">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save New Electronics"
         android:layout_gravity="center"
-        android:textSize="35dp"
         android:layout_margin="20dp"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:text="Save New Electronics"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="35dp" />
 
     <EditText
         android:id="@+id/editTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:hint="Title"
-        android:textColorHint="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
 
 
     <EditText
         android:id="@+id/editCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:hint="Category"
-        android:textColorHint="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
 
     <EditText
         android:id="@+id/editManufacturer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:hint="Manufacturer"
-        android:textColorHint="@color/colorAccent"/>
-
-    <EditText
-        android:id="@+id/editImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:hint="Image"
-        android:textColorHint="@color/colorAccent"/>
-
-    <EditText
-        android:id="@+id/editQuantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:hint="Quantity"
-        android:textColorHint="@color/colorAccent"/>
+        android:textColorHint="@color/colorAccent" />
 
     <EditText
         android:id="@+id/editPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
         android:hint="Price"
-        android:textColorHint="@color/colorAccent"/>
+        android:inputType="number"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
+
+
+    <EditText
+        android:id="@+id/editQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Quantity"
+        android:inputType="number"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_local_library_black_24dp" />
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnProceed"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginTop="31dp"
         android:text="Save" />
 
     <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"

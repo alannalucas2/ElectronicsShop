@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ElectronicsActivities.CustomerOptions">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/itemSingleImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@drawable/ic_local_library_black_24dp" />
+
+
+        <TextView
+            android:id="@+id/itemSingleTitle"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="0dp"
+            android:text="Title"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemSingleManufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/itemSingleTitle"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="167dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="0dp"
+            android:text="Manufacturer"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/itemSingleCategory"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/itemSingleManufacturer"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="0dp"
+            android:text="Category"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/itemSinglePrice"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/itemSingleCategory"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="123dp"
+            android:layout_marginEnd="0dp"
+            android:text="Price"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/itemSingleQuantity"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/itemSingleCategory"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="99dp"
+            android:layout_marginEnd="2dp"
+            android:text="Quantity"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize=".5" />
+
+    <Button
+        android:id="@+id/rateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Set Rating"/>
+
+    <TextView
+        android:id="@+id/ratingTxt"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please leave a rating"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/review"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:hint="Leave a review..."/>
+
+    <Button
+        android:id="@+id/reviewBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Save Review"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Add Item To Cart"/>
+
+        <Button
+            android:id="@+id/returnBtn"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Return"/>
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        app:menu="@menu/bottom_toolbar" />
+
+
+
+
+</LinearLayout>

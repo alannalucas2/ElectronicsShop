@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.alannalucas.assignment3.ElectronicsActivities.AddElectronics;
+import com.example.alannalucas.assignment3.ElectronicsActivities.Catalogue;
 import com.example.alannalucas.assignment3.LoginActivities.ChooseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -76,7 +77,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.btmCatalogue:
-                Intent intent = new Intent(this, AddElectronics.class);
+                Intent intent = new Intent(this, Catalogue.class);
                 this.startActivity(intent);
                 break;
 

@@ -23,7 +23,10 @@
         <activity android:name=".LoginActivities.AdminRegisterActivity" />
         <activity android:name=".ElectronicsActivities.Catalogue" />
         <activity android:name=".ElectronicsActivities.AddElectronics" />
-        <activity android:name=".AdminMainActivity"></activity>
+        <activity android:name=".AdminMainActivity" />
+        <activity android:name=".ElectronicsActivities.CustomerOptions" />
+        <activity android:name=".ElectronicsActivities.ShoppingCart" />
+        <activity android:name=".ElectronicsActivities.CustomerDetails"></activity>
     </application>
 
 </manifest>
