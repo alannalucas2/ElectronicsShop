@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.example.alannalucas.assignment3.ElectronicsActivities.AddElectronics;
 import com.example.alannalucas.assignment3.ElectronicsActivities.Catalogue;
+import com.example.alannalucas.assignment3.ElectronicsActivities.CustomerDetails;
+import com.example.alannalucas.assignment3.ElectronicsActivities.ShoppingCart;
 import com.example.alannalucas.assignment3.LoginActivities.ChooseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -82,12 +84,12 @@ public class CustomerMainActivity extends AppCompatActivity {
                 break;
 
             case R.id.btmCart:
-                Intent intent1 = new Intent(this, CustomerMainActivity.class);
+                Intent intent1 = new Intent(this, ShoppingCart.class);
                 this.startActivity(intent1);
                 break;
 
             case R.id.btmProfile:
-                Intent intent3 = new Intent(this, CustomerMainActivity.class);
+                Intent intent3 = new Intent(this, CustomerDetails.class);
                 this.startActivity(intent3);
                 break;
 

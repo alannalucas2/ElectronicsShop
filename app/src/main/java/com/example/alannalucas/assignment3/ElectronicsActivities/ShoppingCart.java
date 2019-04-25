@@ -37,7 +37,7 @@ public class ShoppingCart extends AppCompatActivity {
     Button purchase, edit, back;
     TextView total;
     //private List<ElectronicGoods> electronicGoodsList = new ArrayList<>();
-    DatabaseReference databaseReference;
+    DatabaseReference cartDB;
     private RecyclerView recCart;
     private static final String TAG = "ItemsList";
     TextView mTitle;
@@ -51,7 +51,7 @@ public class ShoppingCart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("ShoppingCart");
+        //cartDB = FirebaseDatabase.getInstance().getReference().child("ShoppingCart");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -60,11 +60,11 @@ public class ShoppingCart extends AppCompatActivity {
         recCart.setHasFixedSize(true);
         recCart.setLayoutManager(new LinearLayoutManager(this));
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         final String aTitle = getIntent().getStringExtra("ValueKey");
 
         mTitle = (TextView) findViewById(R.id.itemSingleTitle);
-        mTitle.setText(aTitle);
+        mTitle.setText(aTitle);*/
 
         purchase= (Button) findViewById(R.id.purchaseBtn);
         total = (TextView) findViewById(R.id.textTotal);
@@ -97,6 +97,25 @@ public class ShoppingCart extends AppCompatActivity {
         };
 
 
+        purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Builder pattern.
+
+                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                cartDB = FirebaseDatabase.getInstance().getReference("ShoppingCart").child(userID);
+                cartDB.removeValue();
+
+                DatabaseReference purchaseDB = FirebaseDatabase.getInstance().getReference("PurchaseHistory").child(userID);
+                purchaseDB.setValue("£££");
+
+                Toast.makeText(ShoppingCart.this, "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
     }
 
 
@@ -112,7 +131,7 @@ public class ShoppingCart extends AppCompatActivity {
         String userID = user.getUid();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("ShoppingCart").child(userID).limitToLast(50);
+                .child("ShoppingCart").limitToLast(50);
 
         FirebaseRecyclerOptions<CartData> options =
                 new FirebaseRecyclerOptions.Builder<CartData>()
