@@ -21,12 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class PurchaseHistory extends AppCompatActivity {
 
-    private RecyclerView mRecyclerCustomers;
+    private RecyclerView mRecyclerHistory;
     private FirebaseAuth mAuth;
-    private DatabaseReference CustomerRef;
+    private DatabaseReference HistoryRef;
     private BottomNavigationView mBottomNav;
     private FirebaseAuth.AuthStateListener mAuthListener;
     View mView;
@@ -40,12 +41,12 @@ public class PurchaseHistory extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         /*FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();*/
-        CustomerRef = FirebaseDatabase.getInstance().getReference().child("PurchaseHitory");
+        HistoryRef = FirebaseDatabase.getInstance().getReference().child("PurchaseHistory");
 
 
-        mRecyclerCustomers = findViewById(R.id.recyclerCustomers);
-        mRecyclerCustomers.setHasFixedSize(true);
-        mRecyclerCustomers.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerHistory = findViewById(R.id.recyclerHistory);
+        mRecyclerHistory.setHasFixedSize(true);
+        mRecyclerHistory.setLayoutManager(new LinearLayoutManager(this));
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -77,36 +78,43 @@ public class PurchaseHistory extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startListening();
+
+    }
 
     public void startListening() {
-       /* FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("CustomerDetails").child(userID).limitToLast(50);*/
+                .child("ShoppingCart").child(userID).limitToLast(50);
 
-        FirebaseRecyclerOptions<Customer> options =
-                new FirebaseRecyclerOptions.Builder<Customer>()
-                        .setQuery(CustomerRef, Customer.class)
+        FirebaseRecyclerOptions<CartData> options =
+                new FirebaseRecyclerOptions.Builder<CartData>()
+                        .setQuery(query, CartData.class)
                         .build();
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Customer, CustomerProfiles.UserViewHolder>(options) {
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<CartData, PurchaseHistory.UserViewHolder>(options) {
             @Override
-            public CustomerProfiles.UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public PurchaseHistory.UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
                 // layout called R.layout.message for each item
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.customer_layout, parent, false);
+                        .inflate(R.layout.catalogue_layout, parent, false);
 
-                return new CustomerProfiles.UserViewHolder(view);
+                return new PurchaseHistory.UserViewHolder(view);
 
 
             }
 
             @Override
-            protected void onBindViewHolder(CustomerProfiles.UserViewHolder holder, int position, Customer model) {
+            protected void onBindViewHolder(PurchaseHistory.UserViewHolder holder, int position, CartData model) {
                 // Bind the Chat object to the ChatHolder
-                holder.setName(model.name);
-                holder.setAddress(model.address);
+                holder.setTitle(model.title);
+                holder.setManufacturer(model.manufacturer);
+                holder.setPrice(model.price);
 
                 //final String userID = getRef(position).getKey();
 
@@ -114,7 +122,7 @@ public class PurchaseHistory extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(CustomerProfiles.this, PurchaseHistory.class);
+                        Intent intent = new Intent(PurchaseHistory.this, PurchaseHistory.class);
                         startActivity(intent);
 
                     }
@@ -123,7 +131,7 @@ public class PurchaseHistory extends AppCompatActivity {
             }
 
         };
-        mRecyclerCustomers.setAdapter(adapter);
+        mRecyclerHistory.setAdapter(adapter);
         adapter.startListening();
     }
 
@@ -161,15 +169,21 @@ public class PurchaseHistory extends AppCompatActivity {
         }
 
 
-        public void setName(String name) {
-            TextView customerName = (TextView) mView.findViewById(R.id.customerName);
-            customerName.setText(name);
+        public void setTitle(String title) {
+            TextView customerName = (TextView) mView.findViewById(R.id.itemSingleTitle);
+            customerName.setText(title);
         }
 
-        public void setAddress(String address) {
-            TextView customerAddress = (TextView) mView.findViewById(R.id.customerAddress);
-            customerAddress.setText(address);
+        public void setPrice(String price) {
+            TextView customerAddress = (TextView) mView.findViewById(R.id.itemSinglePrice);
+            customerAddress.setText(price);
         }
+
+        public void setManufacturer(String manufacturer) {
+            TextView customerName = (TextView) mView.findViewById(R.id.itemSingleManufacturer);
+            customerName.setText(manufacturer);
+        }
+
 
 
     }

@@ -1,6 +1,7 @@
 package com.example.alannalucas.assignment3.ElectronicsActivities;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,9 +11,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +45,7 @@ public class AddElectronics extends AppCompatActivity {
 
     private Button btnSave;
     private EditText mEditTitle, mEditPrice, mEditImage, mEditQuantity, mEditManufacturer, mEditCategory;
+    private Spinner mSpinner;
 
     private BottomNavigationView mBottomNav;
     private static final int CHOOSE_IMAGE = 101;
@@ -71,7 +75,7 @@ public class AddElectronics extends AppCompatActivity {
 
 
         mEditTitle = (EditText) findViewById(R.id.editTitle);
-        mEditCategory = (EditText) findViewById(R.id.editCategory);
+        //mEditCategory = (EditText) findViewById(R.id.editCategory);
         mEditManufacturer = (EditText) findViewById(R.id.editManufacturer);
         mEditQuantity = (EditText) findViewById(R.id.editQuantity);
         mEditPrice = (EditText) findViewById(R.id.editPrice);
@@ -101,6 +105,12 @@ public class AddElectronics extends AppCompatActivity {
             }
         });
 
+        mSpinner = (Spinner) findViewById(R.id.categorySpinner);
+        String[] items1 = new String[]{"Laptop", "Phone", "Earphones"};
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items1);
+        mSpinner.setAdapter(adapter1);
+
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -124,8 +134,11 @@ public class AddElectronics extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveElectronics();
+                clearDetails();
             }
         });
+
+
 
         databaseElectronics.addValueEventListener(new ValueEventListener() {
             @Override
@@ -144,6 +157,12 @@ public class AddElectronics extends AppCompatActivity {
         });
     }
 
+    public void clearDetails(){
+        mEditTitle.setText("");
+        mEditManufacturer.setText("");
+        mEditQuantity.setText("");
+        mEditPrice.setText("");
+    }
 
     /*private void StoringImageToFirebaseStorage() {
         Calendar calFordDate = Calendar.getInstance();
@@ -317,7 +336,7 @@ public class AddElectronics extends AppCompatActivity {
     public void onClick(View view) {
         if (view==btnSave){
             mEditTitle.getText().clear();
-            mEditCategory.getText().clear();
+            //mSpinner.getSelectedItem()
             mEditManufacturer.getText().clear();
             mEditPrice.getText().clear();
             mEditQuantity.getText().clear();
@@ -330,13 +349,14 @@ public class AddElectronics extends AppCompatActivity {
     private void saveElectronics() {
         String title = mEditTitle.getText().toString().trim();
         String manufacturer = mEditManufacturer.getText().toString().trim();
-        String category = mEditCategory.getText().toString().trim();
+        //ImageView image = mEditImage.get
+        String catSpinner = mSpinner.getSelectedItem().toString();
         String quantity = mEditQuantity.getText().toString().trim();
         String price = mEditPrice.getText().toString().trim();
 
 
 
-        ElectronicGoods electronics = new ElectronicGoods(title, manufacturer, image, category, quantity, price);
+        ElectronicGoods electronics = new ElectronicGoods(title, manufacturer, image, catSpinner, quantity, price);
 
         FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();
@@ -353,6 +373,8 @@ public class AddElectronics extends AppCompatActivity {
 
                     }
                 });
+
+
 
     }
 

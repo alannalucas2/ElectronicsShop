@@ -20,6 +20,8 @@ import com.example.alannalucas.assignment3.LoginActivities.AdminLoginActivity;
 import com.example.alannalucas.assignment3.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -35,12 +37,14 @@ public class ShoppingCart extends AppCompatActivity {
 
 
     Button purchase, edit, back;
+
+
     TextView total;
     //private List<ElectronicGoods> electronicGoodsList = new ArrayList<>();
-    DatabaseReference cartDB;
+    DatabaseReference cartDB, purchaseDB;
     private RecyclerView recCart;
     private static final String TAG = "ItemsList";
-    TextView mTitle;
+    String aTitle, aCategory, aManufacturer, aPrice, aQuantity, aImage, aTotal;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -54,6 +58,8 @@ public class ShoppingCart extends AppCompatActivity {
         //cartDB = FirebaseDatabase.getInstance().getReference().child("ShoppingCart");
 
         mAuth = FirebaseAuth.getInstance();
+
+        purchaseDB = FirebaseDatabase.getInstance().getReference("PurchaseHistory");
 
 
         recCart = findViewById(R.id.recyclerCart);
@@ -103,11 +109,13 @@ public class ShoppingCart extends AppCompatActivity {
                 //Builder pattern.
 
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
                 cartDB = FirebaseDatabase.getInstance().getReference("ShoppingCart").child(userID);
                 cartDB.removeValue();
 
-                DatabaseReference purchaseDB = FirebaseDatabase.getInstance().getReference("PurchaseHistory").child(userID);
-                purchaseDB.setValue("£££");
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Purchase History").child(userID);
+                databaseReference.child(userID).child("price").setValue("€€€");
 
                 Toast.makeText(ShoppingCart.this, "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
 
@@ -118,7 +126,6 @@ public class ShoppingCart extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -126,38 +133,51 @@ public class ShoppingCart extends AppCompatActivity {
 
     }
 
+
     public void startListening() {
         FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("ShoppingCart").limitToLast(50);
+                .child("ShoppingCart")
+                .child(userID)
+                .limitToLast(50);
 
-        FirebaseRecyclerOptions<CartData> options =
-                new FirebaseRecyclerOptions.Builder<CartData>()
-                        .setQuery(query, CartData.class)
+        FirebaseRecyclerOptions<ElectronicGoods> options =
+                new FirebaseRecyclerOptions.Builder<ElectronicGoods>()
+                        .setQuery(query, ElectronicGoods.class)
                         .build();
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<CartData, UserViewHolder>(options) {
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<ElectronicGoods, ShoppingCart.UserViewHolder>(options) {
             @Override
-            public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public ShoppingCart.UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
                 // layout called R.layout.message for each item
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.catalogue_layout, parent, false);
 
-                return new UserViewHolder(view);
+                return new ShoppingCart.UserViewHolder(view);
 
 
             }
 
             @Override
-            protected void onBindViewHolder(UserViewHolder holder, int position, CartData model) {
+            protected void onBindViewHolder(ShoppingCart.UserViewHolder holder, int position, ElectronicGoods model) {
                 // Bind the Chat object to the ChatHolder
                 holder.setTitle(model.title);
                 holder.setManufacturer(model.manufacturer);
                 holder.setPrice(model.price);
 
-                //final String userID = getRef(position).getKey();
+
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        Intent intent = new Intent(ShoppingCart.this, CustomerOptions.class);
+                        startActivity(intent);
+
+                    }
+                });
 
             }
 
@@ -176,9 +196,9 @@ public class ShoppingCart extends AppCompatActivity {
         }
 
 
-        public void setTitle(String title) {
-            TextView itemSingleTitle = (TextView) mView.findViewById(R.id.itemSingleTitle);
-            itemSingleTitle.setText(title);
+        public void setTitle(String name) {
+            TextView userNameView = (TextView) mView.findViewById(R.id.itemSingleTitle);
+            userNameView.setText(name);
         }
 
         public void setManufacturer(String address) {
