@@ -32,15 +32,6 @@ public class AdminMainActivity extends AppCompatActivity {
         /*Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectNavigation(item);
-                return true;
-            }
-        });
-
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -55,44 +46,11 @@ public class AdminMainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void viewCustomer(View view) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent3 = new Intent(this, CustomerProfiles.class);
+        this.startActivity(intent3);
 
-        switch (item.getItemId()) {
-            case R.id.menuLogout:
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                startActivity(new Intent(this, ChooseActivity.class));
-                break;
-
-            case R.id.menuAllUsers:
-                Intent intent1 = new Intent(this, CustomerMainActivity.class);
-                this.startActivity(intent1);
-                break;
-        }
-        return true;
-    }
-
-    private void selectNavigation(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.btmCatalogue:
-                Intent intent = new Intent(this, Catalogue.class);
-                this.startActivity(intent);
-                break;
-
-            case R.id.btmCart:
-                Intent intent1 = new Intent(this, AdminMainActivity.class);
-                this.startActivity(intent1);
-                break;
-
-            case R.id.btmProfile:
-                Intent intent3 = new Intent(this, CustomerProfiles.class);
-                this.startActivity(intent3);
-                break;
-
-        }
     }
 
     public void addElectonics(View view) {
@@ -109,6 +67,7 @@ public class AdminMainActivity extends AppCompatActivity {
         return;
 
     }
+
 
 
 }

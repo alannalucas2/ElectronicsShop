@@ -14,16 +14,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.alannalucas.assignment3.CustomerMainActivity;
 import com.example.alannalucas.assignment3.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class CustomerDetails extends AppCompatActivity {
 
@@ -52,15 +50,16 @@ public class CustomerDetails extends AppCompatActivity {
 
 
         Button submit = findViewById(R.id.btnSubmit);
+        Button back = findViewById(R.id.btnBack);
 
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
+        /*mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
         mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 selectNavigation(item);
                 return true;
             }
-        });
+        });*/
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -80,6 +79,14 @@ public class CustomerDetails extends AppCompatActivity {
             }
         };
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerDetails.this, CustomerMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +97,7 @@ public class CustomerDetails extends AppCompatActivity {
                 String payment = paymentField.getText().toString();
                 String cardSpinner = mySpinner.getSelectedItem().toString();
 
-                Customer details = new Customer(name, address, payment, cardSpinner);
+                Customer details = new CustomerBuilder().setName(name).setAddress(address).setPayment(payment).setCardSpinner(cardSpinner).createCustomer();
 
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userID = user.getUid();
