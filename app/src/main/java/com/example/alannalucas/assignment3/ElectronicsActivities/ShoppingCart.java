@@ -103,25 +103,22 @@ public class ShoppingCart extends AppCompatActivity {
         };
 
 
-        purchase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Builder pattern.
+    }
 
-                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public void purchaseCommand(View view) {
 
 
-                cartDB = FirebaseDatabase.getInstance().getReference("ShoppingCart").child(userID);
-                cartDB.removeValue();
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Purchase History").child(userID);
-                databaseReference.child(userID).child("price").setValue("€€€");
-
-                Toast.makeText(ShoppingCart.this, "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-            }
-        });
+        cartDB = FirebaseDatabase.getInstance().getReference("ShoppingCart").child(userID);
+        cartDB.removeValue();
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Purchase History").child(userID);
+        databaseReference.child(userID).child("price").setValue("€€€");
+
+        Toast.makeText(ShoppingCart.this, "Thank you for your purchase!", Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -185,6 +182,8 @@ public class ShoppingCart extends AppCompatActivity {
         recCart.setAdapter(adapter);
         adapter.startListening();
     }
+
+
 
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

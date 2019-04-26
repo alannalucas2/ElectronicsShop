@@ -106,6 +106,8 @@ public class Catalogue extends AppCompatActivity {
 
     }
 
+    //recycler view uses Adapter design pattern
+
     public void startListening() {
         FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();
@@ -130,6 +132,9 @@ public class Catalogue extends AppCompatActivity {
 
 
             }
+
+            //view holder uses Singleton design pattern to improve preformance when
+            //scrolling through the list
 
             @Override
             protected void onBindViewHolder(UserViewHolder holder, int position, ElectronicGoods model) {

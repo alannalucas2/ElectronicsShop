@@ -15,9 +15,9 @@ public class Customer {
         payment = builder.payment;
 
         new Customer.Builder()
-                .setName("Leonardo")
-                .setAddress("da Vinci")
-                .setPayment("123456")
+                .setName("Leo")
+                .setAddress("Blackrock")
+                .setPayment("987654321")
                 .setCardSpinner("Debit Card")
                 .create();
     }
