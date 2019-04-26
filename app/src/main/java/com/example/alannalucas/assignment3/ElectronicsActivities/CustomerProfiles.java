@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.alannalucas.assignment3.AdminMainActivity;
 import com.example.alannalucas.assignment3.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -32,6 +34,7 @@ public class CustomerProfiles extends AppCompatActivity {
     private BottomNavigationView mBottomNav;
     private FirebaseAuth.AuthStateListener mAuthListener;
     View mView;
+    Button btnReturn;
     private static final String TAG = "ItemsList";
 
     @Override
@@ -43,7 +46,7 @@ public class CustomerProfiles extends AppCompatActivity {
         /*FirebaseUser user = mAuth.getCurrentUser();
         String userID = user.getUid();*/
         CustomerRef = FirebaseDatabase.getInstance().getReference().child("CustomerDetails");
-
+        btnReturn = (Button) findViewById(R.id.btnGBack);
 
         mRecyclerCustomers = findViewById(R.id.recyclerCustomers);
         mRecyclerCustomers.setHasFixedSize(true);
@@ -66,14 +69,14 @@ public class CustomerProfiles extends AppCompatActivity {
             }
         };
 
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectNavigation(item);
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(CustomerProfiles.this, AdminMainActivity.class);
+                startActivity(intent);
             }
         });
+
 
     }
 

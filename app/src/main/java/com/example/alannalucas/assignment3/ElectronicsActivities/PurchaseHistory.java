@@ -12,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.alannalucas.assignment3.AdminMainActivity;
+import com.example.alannalucas.assignment3.CustomerMainActivity;
 import com.example.alannalucas.assignment3.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -64,13 +67,13 @@ public class PurchaseHistory extends AppCompatActivity {
                 // ...
             }
         };
+        Button back = findViewById(R.id.btGoBack);
 
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectNavigation(item);
-                return true;
+            public void onClick(View v) {
+                Intent intent = new Intent(PurchaseHistory.this, CustomerProfiles.class);
+                startActivity(intent);
             }
         });
 
@@ -90,7 +93,7 @@ public class PurchaseHistory extends AppCompatActivity {
         String userID = user.getUid();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("ShoppingCart").child(userID).limitToLast(50);
+                .child("PurchaseHistory").child(userID).limitToLast(50);
 
         FirebaseRecyclerOptions<CartData> options =
                 new FirebaseRecyclerOptions.Builder<CartData>()
@@ -137,26 +140,6 @@ public class PurchaseHistory extends AppCompatActivity {
 
 
 
-    private void selectNavigation(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.btmCatalogue:
-                Intent intent = new Intent(this, Catalogue.class);
-                this.startActivity(intent);
-                break;
-
-            case R.id.btmCart:
-                Intent intent1 = new Intent(this, ShoppingCart.class);
-                this.startActivity(intent1);
-                break;
-
-            case R.id.btmProfile:
-                Intent intent3 = new Intent(this, CustomerDetails.class);
-                this.startActivity(intent3);
-                break;
-
-        }
-    }
 
 
 

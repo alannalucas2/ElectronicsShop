@@ -108,6 +108,7 @@ public class ShoppingCart extends AppCompatActivity {
     public void purchaseCommand(View view) {
 
 
+
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 

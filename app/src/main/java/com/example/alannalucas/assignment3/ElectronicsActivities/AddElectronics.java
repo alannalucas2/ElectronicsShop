@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.alannalucas.assignment3.AdminMainActivity;
 import com.example.alannalucas.assignment3.CustomerMainActivity;
 import com.example.alannalucas.assignment3.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,7 +44,7 @@ import java.util.HashMap;
 public class AddElectronics extends AppCompatActivity {
 
 
-    private Button btnSave;
+    private Button btnSave, btnReturn;
     private EditText mEditTitle, mEditPrice, mEditImage, mEditQuantity, mEditManufacturer, mEditCategory;
     private Spinner mSpinner;
 
@@ -80,7 +81,9 @@ public class AddElectronics extends AppCompatActivity {
         mEditQuantity = (EditText) findViewById(R.id.editQuantity);
         mEditPrice = (EditText) findViewById(R.id.editPrice);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnReturn = (Button) findViewById(R.id.btnGoBack);
         imageView = (ImageView) findViewById(R.id.imageView);
+        mSpinner = (Spinner) findViewById(R.id.categorySpinner);
 
         imageReference = FirebaseStorage.getInstance().getReference();
 
@@ -92,23 +95,15 @@ public class AddElectronics extends AppCompatActivity {
             }
         });
 
+        Spinner spinner = findViewById(R.id.categorySpinner);
+        String[] items = new String[]{"Laptop", "Phone", "Earphones"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        spinner.setAdapter(adapter);
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         databaseElectronics = mFirebaseDatabase.getReference();
-
-        mBottomNav = (BottomNavigationView) findViewById(R.id.navigation);
-        mBottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectNavigation(item);
-                return true;
-            }
-        });
-
-        mSpinner = (Spinner) findViewById(R.id.categorySpinner);
-        String[] items1 = new String[]{"Laptop", "Phone", "Earphones"};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items1);
-        mSpinner.setAdapter(adapter1);
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -128,17 +123,22 @@ public class AddElectronics extends AppCompatActivity {
             }
         };
 
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddElectronics.this, AdminMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener()
 
         {
             @Override
             public void onClick(View v) {
                 saveElectronics();
-                clearDetails();
             }
         });
-
-
 
         databaseElectronics.addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,164 +163,6 @@ public class AddElectronics extends AppCompatActivity {
         mEditQuantity.setText("");
         mEditPrice.setText("");
     }
-
-    /*private void StoringImageToFirebaseStorage() {
-        Calendar calFordDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
-        saveCurrentDate = currentDate.format(calFordDate.getTime());
-
-        Calendar calFordTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        saveCurrentTime = currentTime.format(calFordDate.getTime());
-
-        postRandomName = saveCurrentDate + saveCurrentTime;
-
-        StorageReference filePath = imageReference.child("Post Images").child(uriProfileImage.getLastPathSegment() + postRandomName + ".jpg");
-
-        filePath.putFile(uriProfileImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()) {
-                    downloadUrl = task.getResult().getStorage().getDownloadUrl().toString();
-                    Toast.makeText(AddElectronics.this, "image uploaded successfully to Storage...", Toast.LENGTH_SHORT).show();
-
-                    SavingPostInformationToDatabase();
-
-                } else {
-                    String message = task.getException().getMessage();
-                    Toast.makeText(AddElectronics.this, "Error occured: " + message, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-        btnSave.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v) {
-                saveElectronics();
-            }
-        });
-    }/*
-
-
-
-
-    /*private void SavePost(){
-        manufacturer = mEditManufacturer.getText().toString();
-        price = mEditPrice.getText().toString();
-        category = mEditCategory.getText().toString();
-        quantity = mEditQuantity.getText().toString();
-        title = mEditTitle.getText().toString();
-
-        if(uriProfileImage == null){
-            Toast.makeText(AddElectronics.this, "Please select image...", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(manufacturer))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(quantity))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(title))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(price))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(category))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else{
-            StoringImageToFirebaseStorage();
-        }
-
-    }*/
-
-
-    /*private void SavingPostInformationToDatabase() {
-
-        HashMap imageMap = new HashMap();
-            imageMap.put("title", title);
-            imageMap.put("manufacturer", manufacturer);
-            imageMap.put("category", category);
-            imageMap.put("price", price);
-            imageMap.put("quantity", quantity);
-            imageMap.put("image", image);
-        imageRef.child(postRandomName).updateChildren(imageMap).addOnCompleteListener(new OnCompleteListener() {
-            @Override
-            public void onComplete(@NonNull Task task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(AddElectronics.this, "successful upload", Toast.LENGTH_SHORT);
-
-                }else{
-                    Toast.makeText(AddElectronics.this, "error uploading", Toast.LENGTH_SHORT);
-                }
-            }
-        });
-
-*/
-
-
-
-
-    /*private void loadUserInformation() {
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user != null) {
-            if (user.getPhotoUrl() != null) {
-                Glide.with(this).load(user.getPhotoUrl().toString())
-                        .into(imageView);
-
-            }
-
-            if (user.getDisplayName() != null) {
-                editName.setText(user.getDisplayName());
-            }
-        }
-
-
-    }*/
-
-    /*public void uploadImageToFirebaseStorage() {
-
-        final StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profilepics/" + System.currentTimeMillis() + ".jpg");
-
-
-        if (uriProfileImage != null) {
-            profileImageRef.putFile(uriProfileImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //progressBar.setVisibility(View.GONE);
-                            profileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    profileImageUrl = uri.toString();
-                                    Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-        }
-    }*/
-
-
-
-
 
 
 
@@ -364,6 +206,7 @@ public class AddElectronics extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(AddElectronics.this, "Electronic Good saved", Toast.LENGTH_LONG).show();
+                clearDetails();
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -379,27 +222,6 @@ public class AddElectronics extends AppCompatActivity {
     }
 
 
-    private void selectNavigation(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.btmCatalogue:
-                Intent intent = new Intent(this, Catalogue.class);
-                this.startActivity(intent);
-                break;
-
-            case R.id.btmCart:
-                Intent intent1 = new Intent(this, CustomerMainActivity.class);
-                this.startActivity(intent1);
-                break;
-
-            case R.id.btmProfile:
-                Intent intent3 = new Intent(this, CustomerMainActivity.class);
-                this.startActivity(intent3);
-                break;
-
-        }
-    }
-
     //add a toast to show when successfully signed in
     /**
      * customizable toast
@@ -408,35 +230,6 @@ public class AddElectronics extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
-
-    /*public void saveBtn(View view) {
-        manufacturer = mEditManufacturer.getText().toString();
-        price = mEditPrice.getText().toString();
-        category = mEditCategory.getText().toString();
-        quantity = mEditQuantity.getText().toString();
-        title = mEditTitle.getText().toString();
-
-        if(uriProfileImage == null){
-            Toast.makeText(AddElectronics.this, "Please select image...", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(manufacturer))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(quantity))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(title))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(price))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(category))
-        {
-            Toast.makeText(AddElectronics.this, "please fill all fields", Toast.LENGTH_SHORT).show();
-        }else{
-            //StoringImageToFirebaseStorage();
-        }*/
 
 
     }
