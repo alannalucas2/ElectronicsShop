@@ -16,7 +16,7 @@ public class CartData {
 
     }
 
-    public CartData(String title, String manufacturer, String image, String category, String quantity, String price, String total) {
+    private CartData(String title, String manufacturer, String image, String category, String quantity, String price, String total) {
         this.title = title;
         this.manufacturer = manufacturer;
         this.image = image;
@@ -26,6 +26,11 @@ public class CartData {
         this.total = total;
     }
 
+    //implemented factory method
+    //factory method creates constructor for adding items to the cart
+    public static CartData createCartData(String title, String manufacturer, String image, String category, String quantity, String price, String total) {
+        return new CartData(title, manufacturer, image, category, quantity, price, total);
+    }
 
 
     public String getTitle() {

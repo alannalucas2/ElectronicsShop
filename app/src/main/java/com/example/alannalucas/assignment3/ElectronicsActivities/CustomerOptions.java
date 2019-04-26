@@ -1,7 +1,6 @@
 package com.example.alannalucas.assignment3.ElectronicsActivities;
 
 import android.content.Intent;
-import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -85,6 +84,7 @@ public class CustomerOptions extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        //factory method creates cart data
         cartDatabase = FirebaseDatabase.getInstance().getReference().child("ShoppingCart");
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -97,7 +97,7 @@ public class CustomerOptions extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userID = user.getUid();
 
-                CartData shoppingCart = new CartData(aTitle, aCategory, aManufacturer, aQuantity, aPrice, aImage, aTotal);
+                CartData shoppingCart = CartData.createCartData(aTitle, aCategory, aManufacturer, aQuantity, aPrice, aImage, aTotal);
 
                 String cartId = cartDatabase.push().getKey();
 
